@@ -1,0 +1,35 @@
+name: SonarQube SAST analysis scan
+on:
+  # Trigger analysis when pushing to your main branches, and when creating a pull request.
+  push:
+    branches:
+      - main
+      - Sat707-patch-1
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        fetch-depth: 0
+    - name: Sonarcloud Scan
+      run: |
+      
+    
+      uses: sonarsource/sonarcloud-github-action@v2 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+        args: >
+         -Dsonar.organization=sonarcloudqualitycheck
+         -Dsonar.projectKey=Sat707_Clonesupplygoat
+         -Dsonar.python.coverage.reportPaths=coverage.xml
+         -Dsonar.sources=lib/
+         -Dsonar.tests=tests/
+         -Dsonar.test.exclusions=tests/**
+         -Dsonar.verbose=true
