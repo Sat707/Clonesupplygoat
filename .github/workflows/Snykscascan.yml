@@ -23,7 +23,7 @@ jobs:
       - run: npm install
 
       - name: Run Snyk SCA scan
-        uses: snyk/actions/test@main
+        uses: snyk/actions/python@master
         env:
           # This secret must be configured in your repository settings
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
