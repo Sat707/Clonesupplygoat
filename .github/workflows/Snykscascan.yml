@@ -1,0 +1,42 @@
+name: Snyk SCA Scan
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  snyk-sca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (example for Node.js)
+        # Replace with the appropriate setup for your project's language (e.g., Python, Java)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: npm install
+
+      - name: Run Snyk SCA scan
+        uses: snyk/actions/test@main
+        env:
+          # This secret must be configured in your repository settings
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          # Command can be 'test' or 'monitor'. 'test' runs a scan and fails the job if issues are found.
+          # 'monitor' takes a snapshot of your dependencies and sends to Snyk for continuous monitoring.
+          command: test
+          # The 'args' define what to scan. For SCA, 'test' usually suffices.
+          # To output results to GitHub Code Scanning, add '--sarif-file-output=snyk.sarif'
+          args: --severity-threshold=high
+
+      - name: Upload Snyk results to GitHub Code Scanning (optional)
+        if: always() # Uploads the report even if the previous step failed
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snyk.sarif
