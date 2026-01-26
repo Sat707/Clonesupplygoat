@@ -27,9 +27,3 @@ jobs:
           # The 'args' define what to scan. For SCA, 'test' usually suffices.
           # To output results to GitHub Code Scanning, add '--sarif-file-output=snyk.sarif'
           args: --severity-threshold=high
-
-      - name: Upload Snyk results to GitHub Code Scanning (optional)
-        if: always() # Uploads the report even if the previous step failed
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk.sarif
