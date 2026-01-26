@@ -18,7 +18,7 @@ require (
 	github.com/aws/aws-sdk-go v1.42.35
 	github.com/bgentry/speakeasy v0.1.0
 	github.com/bmatcuk/doublestar v1.1.5
-	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e
+	github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48ee
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f
 	github.com/davecgh/go-spew v1.1.1
 	github.com/dylanmei/winrmtest v0.0.0-20190225150635-99b7fe2fddf1
